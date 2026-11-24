@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% block title %}Sign in · VigilSIEM{% endblock %}
+{% block content %}
+<section class="login">
+  <h1>VIGILSIEM</h1>
+  <p class="muted">Security operations console</p>
+  {% if error %}<div class="notice error" role="alert">{{ error }}</div>{% endif %}
+  <form method="post" action="/login" autocomplete="off">
+    <label>Username <input type="text" name="username" maxlength="64" required autofocus></label>
+    <label>Password <input type="password" name="password" maxlength="128" required autocomplete="current-password"></label>
+    <button type="submit">Sign in</button>
+  </form>
+</section>
+{% endblock %}

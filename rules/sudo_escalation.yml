@@ -1,0 +1,18 @@
+id: VSR-1003
+name: Failed sudo Followed by Root Session
+description: A user fails sudo authentication, then opens a root session within 5 minutes.
+severity: critical
+mitre:
+  tactic: Privilege Escalation
+  technique_id: T1548.003
+  technique: Sudo and Sudo Caching
+type: sequence
+steps:
+  - match:
+      - {field: action, equals: sudo}
+      - {field: status, equals: failure}
+  - match:
+      - {field: action, equals: sudo_session}
+      - {field: metadata.target_user, equals: root}
+group_by: username
+window_seconds: 300

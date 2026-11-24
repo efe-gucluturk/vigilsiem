@@ -1,0 +1,17 @@
+{% if error %}<div class="notice error" role="alert">{{ error }}</div>{% endif %}
+<div class="table-wrap">
+<table>
+  <thead><tr><th>Name</th><th>Destination</th><th>Min severity</th><th></th></tr></thead>
+  <tbody>
+  {% for h in hooks %}
+  <tr class="static">
+    <td>{{ h.name }}</td><td class="mono">{{ h.url_masked }}</td>
+    <td><span class="badge sev-{{ h.min_severity.value }}">{{ h.min_severity.value }}</span></td>
+    <td><button class="danger ghost" hx-delete="/ui/webhooks/{{ h.id }}" hx-target="#hooks" hx-swap="innerHTML" hx-confirm="Delete this webhook?">Delete</button></td>
+  </tr>
+  {% else %}
+  <tr class="static"><td colspan="4" class="muted">No webhooks configured.</td></tr>
+  {% endfor %}
+  </tbody>
+</table>
+</div>

@@ -1,0 +1,25 @@
+<h1>#{{ alert.id }} · {{ alert.rule_name }}</h1>
+<p><span class="badge sev-{{ alert.severity.value }}">{{ alert.severity.value }}</span>
+   <span class="badge status status-{{ alert.status.value }}">{{ alert.status.value|replace("_", " ") }}</span></p>
+<p>{{ alert.summary }}</p>
+<div class="field"><span class="muted">Detected</span><span class="mono">{{ alert.created_at|ts }}</span></div>
+<div class="field"><span class="muted">MITRE</span><span>{{ alert.mitre_tactic }} · <span class="mono">{{ alert.mitre_technique }}</span> {{ alert.mitre_technique_name }}</span></div>
+<div class="field"><span class="muted">Source IP</span><span class="mono">{{ alert.source_ip or "—" }}</span></div>
+<div class="field"><span class="muted">User</span><span>{{ alert.username or "—" }}</span></div>
+
+<h2>Triage</h2>
+<div class="btn-row">
+  {% for s in statuses %}
+  <button class="{{ '' if s == alert.status else 'ghost' }}" hx-post="/ui/alerts/{{ alert.id }}/status"
+          hx-vals='{"status": "{{ s.value }}"}' hx-target="#detail" hx-swap="innerHTML">{{ s.value|replace("_", " ")|title }}</button>
+  {% endfor %}
+</div>
+
+<h2>Matched rule {% if rule %}· {{ rule.id }}{% endif %}</h2>
+{% if rule %}<pre class="raw mono">{{ rule.source }}</pre>{% else %}<p class="muted">Rule not currently loaded.</p>{% endif %}
+
+<h2>Raw logs ({{ events|length }})</h2>
+{% for e in events %}
+  <div class="muted mono">{{ e.timestamp|ts }} · {{ e.action }} · {{ e.status }}</div>
+  <pre class="raw mono">{{ e.raw_log }}</pre>
+{% else %}<p class="muted">No linked events.</p>{% endfor %}

@@ -1,0 +1,24 @@
+{% if notice %}<div class="notice" role="status">{{ notice }}</div>{% endif %}
+<div class="toolbar">
+  <span class="muted">{{ rules|length }} rules loaded from YAML</span>
+  <button hx-post="/ui/rules/reload" hx-target="#rules" hx-swap="innerHTML">Reload rules</button>
+</div>
+<div class="table-wrap">
+<table>
+  <thead><tr><th>ID</th><th>Name</th><th>Type</th><th>Severity</th><th>MITRE</th><th>Hits</th><th>State</th></tr></thead>
+  <tbody>
+  {% for r in rules %}
+  <tr class="static">
+    <td class="mono">{{ r.id }}</td>
+    <td class="wrap"><details><summary>{{ r.name }}</summary>
+      <p class="muted">{{ r.description }}</p><pre class="raw mono">{{ r.source }}</pre></details></td>
+    <td>{{ r.type }}</td>
+    <td><span class="badge sev-{{ r.severity }}">{{ r.severity }}</span></td>
+    <td>{{ r.mitre_tactic }} · <span class="mono">{{ r.mitre_technique_id }}</span> {{ r.mitre_technique }}</td>
+    <td class="mono">{{ r.hits }}</td>
+    <td>{{ "active" if r.enabled else "disabled" }}</td>
+  </tr>
+  {% endfor %}
+  </tbody>
+</table>
+</div>

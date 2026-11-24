@@ -1,0 +1,14 @@
+id: VSR-2003
+name: Path Traversal Attempt
+description: Directory traversal or sensitive-file access in a request URI.
+severity: high
+mitre:
+  tactic: Initial Access
+  technique_id: T1190
+  technique: Exploit Public-Facing Application
+type: signature
+match:
+  - field: metadata.uri
+    contains_any: ["../", "..\\", "/etc/passwd", "/etc/shadow", "boot.ini", "/proc/self"]
+group_by: source_ip
+dedupe_seconds: 60

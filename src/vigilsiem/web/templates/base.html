@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="htmx-config" content='{"allowEval": false, "includeIndicatorStyles": false, "allowScriptTags": false, "selfRequestsOnly": true}'>
+  <title>{% block title %}VigilSIEM{% endblock %}</title>
+  <link rel="stylesheet" href="/static/css/app.css">
+  <script src="/static/vendor/htmx.min.js" defer></script>
+  <script src="/static/js/app.js" defer></script>
+  <script src="/static/vendor/alpine.csp.min.js" defer></script>
+</head>
+<body{% if admin %} hx-headers='{"X-CSRF-Token": "{{ admin.csrf_token }}"}'{% endif %}>
+{% if admin %}
+<header class="topbar">
+  <a class="brand" href="/">VIGILSIEM</a>
+  <nav class="nav" aria-label="Main">
+    <a href="/" class="{{ 'active' if page == 'dashboard' }}">Dashboard</a>
+    <a href="/rules" class="{{ 'active' if page == 'rules' }}">Detection Rules</a>
+    <a href="/webhooks" class="{{ 'active' if page == 'webhooks' }}">Webhooks</a>
+  </nav>
+  <span class="muted">{{ admin.username }}</span>
+  <button class="ghost" hx-post="/ui/logout">Sign out</button>
+</header>
+{% endif %}
+<main class="container">
+{% block content %}{% endblock %}
+</main>
+</body>
+</html>

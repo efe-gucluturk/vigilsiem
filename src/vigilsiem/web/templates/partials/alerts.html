@@ -1,0 +1,20 @@
+<div class="table-wrap">
+<table>
+  <thead><tr><th>Time</th><th>Severity</th><th>Rule</th><th>MITRE</th><th>Source IP</th><th>User</th><th>Status</th></tr></thead>
+  <tbody>
+  {% for a in alerts %}
+    <tr hx-get="/ui/alerts/{{ a.id }}" hx-target="#detail" hx-swap="innerHTML" tabindex="0">
+      <td class="mono">{{ a.created_at|ts }}</td>
+      <td><span class="badge sev-{{ a.severity.value }}">{{ a.severity.value }}</span></td>
+      <td class="wrap">{{ a.rule_name }}</td>
+      <td class="mono">{{ a.mitre_technique }}</td>
+      <td class="mono">{{ a.source_ip or "—" }}</td>
+      <td>{{ a.username or "—" }}</td>
+      <td><span class="badge status status-{{ a.status.value }}">{{ a.status.value|replace("_", " ") }}</span></td>
+    </tr>
+  {% else %}
+    <tr class="static"><td colspan="7" class="muted">No alerts match the current filters.</td></tr>
+  {% endfor %}
+  </tbody>
+</table>
+</div>

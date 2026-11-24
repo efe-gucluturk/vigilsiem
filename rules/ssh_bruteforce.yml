@@ -1,0 +1,16 @@
+id: VSR-1001
+name: SSH Brute Force
+description: Five or more failed SSH logins from one source IP within 60 seconds.
+severity: high
+mitre:
+  tactic: Credential Access
+  technique_id: T1110
+  technique: Brute Force
+type: threshold
+match:
+  - {field: event_category, equals: authentication}
+  - {field: action, equals: ssh_login}
+  - {field: status, equals: failure}
+group_by: source_ip
+window_seconds: 60
+threshold: 5

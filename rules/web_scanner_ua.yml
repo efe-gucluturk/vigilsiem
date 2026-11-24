@@ -1,0 +1,14 @@
+id: VSR-2004
+name: Known Scanner User-Agent
+description: User-Agent of a common vulnerability scanner or attack tool.
+severity: medium
+mitre:
+  tactic: Reconnaissance
+  technique_id: T1595.002
+  technique: Vulnerability Scanning
+type: signature
+match:
+  - field: metadata.user_agent
+    contains_any: [sqlmap, nikto, nmap, masscan, dirbuster, gobuster, wpscan, hydra, acunetix, nessus, havij, zgrab]
+group_by: source_ip
+dedupe_seconds: 300

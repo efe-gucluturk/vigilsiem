@@ -1,0 +1,15 @@
+id: VSR-2005
+name: Forced Browsing / Error Flood
+description: Twenty or more HTTP 4xx/5xx responses to one IP within 60 seconds.
+severity: low
+mitre:
+  tactic: Reconnaissance
+  technique_id: T1595.003
+  technique: Wordlist Scanning
+type: threshold
+match:
+  - {field: event_category, equals: web}
+  - {field: metadata.status_code, gte: 400}
+group_by: source_ip
+window_seconds: 60
+threshold: 20

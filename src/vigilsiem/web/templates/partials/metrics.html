@@ -1,0 +1,22 @@
+<div class="grid grid-metrics">
+  <div class="card"><div class="stat mono">{{ "%.2f"|format(stats.events_per_sec) }}</div><div class="stat-label">Events / sec (60s avg)</div></div>
+  {% for sev in severities %}
+  <div class="card">
+    <div class="stat mono">{{ stats.active_by_severity.get(sev.value, 0) }}</div>
+    <div class="stat-label"><span class="badge sev-{{ sev.value }}">{{ sev.value }}</span> active</div>
+  </div>
+  {% endfor %}
+  <div class="card"><div class="stat mono">{{ stats.total_events }}</div><div class="stat-label">Events stored</div></div>
+</div>
+<div class="grid grid-lists">
+  <section class="card"><h2>Top attacking IPs</h2>
+    <ul class="list">
+      {% for ip, n in stats.top_ips %}<li><span class="mono">{{ ip }}</span><strong>{{ n }}</strong></li>
+      {% else %}<li class="muted">No alerts yet</li>{% endfor %}
+    </ul></section>
+  <section class="card"><h2>Top MITRE techniques</h2>
+    <ul class="list">
+      {% for t, n in stats.top_techniques %}<li><span>{{ t }}</span><strong>{{ n }}</strong></li>
+      {% else %}<li class="muted">No alerts yet</li>{% endfor %}
+    </ul></section>
+</div>

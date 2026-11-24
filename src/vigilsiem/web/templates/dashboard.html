@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% block title %}Dashboard · VigilSIEM{% endblock %}
+{% block content %}
+<h1>Security Overview</h1>
+<div hx-get="/ui/metrics" hx-trigger="load, every 5s" hx-swap="innerHTML" aria-live="polite"></div>
+
+<div class="toolbar">
+  <h1>Live Alert Feed</h1>
+  <form id="filters" class="toolbar">
+    <select name="severity" aria-label="Severity" hx-get="/ui/alerts" hx-target="#feed" hx-include="#filters" hx-trigger="change">
+      <option value="">All severities</option>
+      <option value="critical">Critical</option><option value="high">High</option>
+      <option value="medium">Medium</option><option value="low">Low</option>
+    </select>
+    <select name="status" aria-label="Status" hx-get="/ui/alerts" hx-target="#feed" hx-include="#filters" hx-trigger="change">
+      <option value="">All statuses</option>
+      <option value="open">Open</option><option value="investigating">Investigating</option>
+      <option value="resolved">Resolved</option><option value="false_positive">False positive</option>
+    </select>
+  </form>
+</div>
+<div id="feed" hx-get="/ui/alerts" hx-include="#filters" hx-trigger="load, every 5s"></div>
+
+<aside class="slideover" x-data="slideover" x-show="open" x-cloak
+       @open-detail.window="show" @keydown.escape.window="close" aria-label="Alert details">
+  <div class="slideover-head">
+    <strong>Alert details</strong>
+    <button class="ghost" @click="close" aria-label="Close">Close ✕</button>
+  </div>
+  <div id="detail" class="slideover-body"></div>
+</aside>
+{% endblock %}

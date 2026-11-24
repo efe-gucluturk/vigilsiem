@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block title %}Webhooks · VigilSIEM{% endblock %}
+{% block content %}
+<h1>Alert Webhooks</h1>
+<p class="muted">High/Critical alerts are posted to Slack or Discord. URLs must be https and resolve to public addresses only (SSRF-protected). Stored URLs are never displayed.</p>
+<form class="toolbar" hx-post="/ui/webhooks" hx-target="#hooks" hx-swap="innerHTML">
+  <input type="text" name="name" placeholder="Name" maxlength="64" required>
+  <input type="url" name="url" placeholder="https://hooks.slack.com/services/…" maxlength="2048" required size="44">
+  <select name="min_severity" aria-label="Minimum severity">
+    {% for s in severities %}<option value="{{ s.value }}">{{ s.value|title }}+</option>{% endfor %}
+  </select>
+  <button type="submit">Add webhook</button>
+</form>
+<div id="hooks">{% include "partials/webhooks_table.html" %}</div>
+{% endblock %}
