@@ -12,7 +12,7 @@ ruff check src tests agent scripts       # lint (includes flake8-bandit "S" rule
 bandit -r src/ -c pyproject.toml         # SAST — must report 0 issues
 python scripts/manage_keys.py create --name web-01   # mint an agent API key
 python scripts/manage_admin.py hash          # -> VIGIL_ADMIN_PASSWORD_HASH
-VIGIL_COOKIE_SECURE=false uvicorn --factory vigilsiem.api.app:create_app   # local http dev only
+VIGIL_COOKIE_SECURE=false uvicorn --factory vigilsiem.api.app:create_app --no-server-header   # local http dev only
 ```
 
 ## Layout

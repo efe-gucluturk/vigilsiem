@@ -1,0 +1,31 @@
+# Secrets live in .env (never committed): copy .env.example and fill in VIGIL_JWT_SECRET
+# and VIGIL_ADMIN_PASSWORD_HASH. Cookies are Secure by default, so put a TLS-terminating
+# reverse proxy in front and set VIGIL_TRUSTED_PROXY_COUNT accordingly.
+services:
+  vigilsiem:
+    build:
+      context: .
+      target: runtime
+    image: vigilsiem:latest
+    env_file: .env
+    environment:
+      VIGIL_DATABASE_URL: sqlite+aiosqlite:////app/data/vigilsiem.db
+      VIGIL_RULES_DIR: /app/rules
+    ports:
+      - "127.0.0.1:8000:8000"   # loopback only; expose via a TLS reverse proxy
+    volumes:
+      - vigil-data:/app/data
+    user: "10001:10001"
+    read_only: true
+    tmpfs:
+      - /tmp:size=16m,mode=1777
+    cap_drop:
+      - ALL
+    security_opt:
+      - no-new-privileges:true
+    pids_limit: 200
+    mem_limit: 512m
+    restart: unless-stopped
+
+volumes:
+  vigil-data:
