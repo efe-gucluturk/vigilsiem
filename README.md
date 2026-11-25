@@ -143,6 +143,14 @@ pytest
 └── ARCHITECTURE.md  CLAUDE.md
 ```
 
+## Authorized & Educational Use Only
+
+VigilSIEM is a defensive monitoring tool intended for systems you own or are explicitly
+authorized to monitor, and for education and portfolio/lab use. The attack simulator
+(`scripts/simulate_attacks.py`) generates synthetic log lines (offline by default, or posted only
+to the VigilSIEM server you specify with `--server`). It does not scan or probe hosts. Do not use this project to monitor
+or test systems without authorization.
+
 ## License
 
-MIT
+MIT License. Copyright (c) 2026 Efe Güçlütürk. See [LICENSE](LICENSE).

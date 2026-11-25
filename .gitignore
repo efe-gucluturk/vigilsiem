@@ -29,3 +29,9 @@ data/*
 .idea/
 .vscode/
 .claude/settings.local.json
+output/
+Recon-Karneler/
+dumps/
+*.dump
+*.pem
+*.key
