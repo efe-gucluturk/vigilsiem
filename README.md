@@ -143,13 +143,15 @@ pytest
 └── ARCHITECTURE.md  CLAUDE.md
 ```
 
-## Authorized & Educational Use Only
+## Authorized & Educational Use Only / Yalnızca Yetkili ve Eğitim Amaçlı Kullanım
 
 VigilSIEM is a defensive monitoring tool intended for systems you own or are explicitly
 authorized to monitor, and for education and portfolio/lab use. The attack simulator
 (`scripts/simulate_attacks.py`) generates synthetic log lines (offline by default, or posted only
 to the VigilSIEM server you specify with `--server`). It does not scan or probe hosts. Do not use this project to monitor
 or test systems without authorization.
+
+**Yalnızca Yetkili ve Eğitim Amaçlı Kullanım.** Bu proje yalnızca sahibi olduğunuz veya açık yazılı izin aldığınız sistemlerde ve eğitim amacıyla kullanılmalıdır. İzinsiz kullanım 5237 sayılı Türk Ceza Kanunu m. 243–244 kapsamında suç oluşturabilir; yazar kötüye kullanımdan sorumlu tutulamaz.
 
 ## License
 
